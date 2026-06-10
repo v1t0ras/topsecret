@@ -1,0 +1,216 @@
+/* login.css — Login Screen Styles */
+
+#login-screen {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-login);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg);
+  padding: var(--space-lg);
+  transition: opacity var(--transition-slow) ease, visibility var(--transition-slow) ease;
+}
+
+#login-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-3xl) var(--space-xl);
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  animation: scaleIn var(--transition-slow) ease forwards;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-primary);
+}
+
+.login-icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-md);
+  animation: float 3s ease-in-out infinite;
+}
+
+#login-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+  color: var(--color-text);
+}
+
+.login-subtitle {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-base);
+  margin-bottom: var(--space-xl);
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+#password-input {
+  width: 100%;
+  padding: var(--space-md) var(--space-lg);
+  font-size: var(--font-size-lg);
+  letter-spacing: 0.1em;
+  text-align: center;
+  background: var(--color-bg);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  transition: all var(--transition-base);
+}
+
+#password-input::placeholder {
+  color: var(--color-text-muted);
+  letter-spacing: normal;
+  text-align: center;
+}
+
+#password-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(184, 92, 122, 0.15);
+  outline: none;
+}
+
+#password-input:invalid:not(:placeholder-shown) {
+  border-color: var(--color-error);
+}
+
+.input-border {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--gradient-primary);
+  transform: translateX(-50%);
+  transition: width var(--transition-base);
+}
+
+#password-input:focus + .input-border {
+  width: 100%;
+}
+
+#login-submit {
+  padding: var(--space-md) var(--space-xl);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  background: var(--gradient-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+#login-submit::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-primary);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+#login-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+#login-submit:active {
+  transform: translateY(0);
+}
+
+#login-submit:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Error & Hint Messages */
+#login-error {
+  color: var(--color-error);
+  font-size: var(--font-size-sm);
+  min-height: 1.5em;
+  animation: shake 0.4s ease;
+}
+
+#login-hint {
+  color: var(--color-accent-gold);
+  font-size: var(--font-size-sm);
+  font-style: italic;
+  min-height: 1.5em;
+  animation: fadeIn var(--transition-base) ease forwards;
+}
+
+#login-hint.hidden,
+#login-error.hidden {
+  display: none;
+}
+
+/* Shake animation for wrong password */
+.login-card.shake {
+  animation: shake 0.5s ease;
+}
+
+/* Success state */
+.login-card.success {
+  animation: pulse 0.6s ease;
+}
+
+.login-card.success .login-icon {
+  animation: none;
+}
+
+.login-card.success #login-title {
+  color: var(--color-primary);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .login-card {
+    padding: var(--space-2xl) var(--space-lg);
+    margin: var(--space-md);
+    max-width: calc(100% - 2rem);
+  }
+
+  #password-input {
+    font-size: var(--font-size-base); /* Prevents zoom on iOS */
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .login-card {
+    border-width: 2px;
+  }
+
+  #password-input {
+    border-width: 2px;
+  }
+}

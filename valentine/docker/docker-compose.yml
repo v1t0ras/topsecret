@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  valentine:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: valentine-site
+    restart: unless-stopped
+    ports:
+      - "8080:80"          # Change 8080 to any free port on your VPS
+    volumes:
+      # Optional: mount assets separately so you can update photos without rebuilding
+      - ../assets:/usr/share/nginx/html/assets:ro
+    labels:
+      - "traefik.enable=false"   # Remove if using Traefik
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+# If using Caddy as reverse proxy on the VPS, add a Caddyfile entry:
+# for-ana.yourdomain.com {
+#   reverse_proxy localhost:8080
+# }

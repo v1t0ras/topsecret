@@ -1,0 +1,343 @@
+/* puzzle.css — Cipher Decoder Puzzle Styles */
+
+.puzzle-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+/* Progress Bar */
+.puzzle-progress {
+  margin-bottom: var(--space-2xl);
+  text-align: center;
+}
+
+.progress-segments {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.progress-segment {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-tertiary);
+  border: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-segment::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-slow) ease;
+  z-index: -1;
+}
+
+.progress-segment.revealed {
+  color: var(--color-white);
+  border-color: var(--color-primary);
+}
+
+.progress-segment.revealed::before {
+  transform: scaleX(1);
+}
+
+.progress-segment.current {
+  animation: pulse 1.5s ease-in-out infinite;
+  border-color: var(--color-accent);
+}
+
+.progress-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Letter Display */
+.letter-display {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl);
+  margin-bottom: var(--space-2xl);
+  min-height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.letter-display::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--gradient-primary);
+}
+
+.letter-block {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  line-height: 1.8;
+  color: var(--color-text);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all var(--transition-slow) ease;
+}
+
+.letter-block.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.letter-block.decrypting {
+  animation: decryptShimmer 0.5s ease infinite;
+}
+
+@keyframes decryptShimmer {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Question Area */
+.question-area {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+
+.question-card {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.question-card__text {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xl);
+  font-style: italic;
+  color: var(--color-text);
+  text-align: center;
+  margin-bottom: var(--space-xl);
+  line-height: 1.5;
+}
+
+.question-input-group {
+  display: flex;
+  gap: var(--space-md);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.question-input {
+  flex: 1;
+  padding: var(--space-md) var(--space-lg);
+  font-size: var(--font-size-lg);
+  text-align: center;
+  letter-spacing: 0.05em;
+  background: var(--color-bg-secondary);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  transition: all var(--transition-base);
+}
+
+.question-input::placeholder {
+  color: var(--color-text-muted);
+  letter-spacing: normal;
+}
+
+.question-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(184, 92, 122, 0.15);
+  outline: none;
+}
+
+.question-input.error {
+  border-color: var(--color-error);
+  animation: shake 0.4s ease;
+}
+
+.question-input.success {
+  border-color: var(--color-success);
+}
+
+.question-submit {
+  padding: var(--space-md) var(--space-xl);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  background: var(--gradient-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+}
+
+.question-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+.question-submit:active {
+  transform: translateY(0);
+}
+
+.question-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.question-hint {
+  display: block;
+  text-align: center;
+  margin-top: var(--space-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-accent-gold);
+  font-style: italic;
+  min-height: 1.5em;
+  animation: fadeIn var(--transition-base) ease;
+}
+
+.question-error {
+  display: block;
+  text-align: center;
+  margin-top: var(--space-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-error);
+  min-height: 1.5em;
+  animation: shake 0.4s ease;
+}
+
+.question-attempts {
+  display: block;
+  text-align: center;
+  margin-top: var(--space-sm);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+/* Reveal State */
+.puzzle-reveal {
+  text-align: center;
+  padding: var(--space-3xl) var(--space-xl);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  animation: scaleIn var(--transition-slow) ease forwards;
+}
+
+.reveal-title {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--space-lg);
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.reveal-message {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xl);
+  font-style: italic;
+  color: var(--color-text);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto var(--space-2xl);
+}
+
+.reveal-hearts {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.reveal-heart {
+  font-size: 2rem;
+  animation: heartFloat 2s ease-in-out infinite;
+}
+
+.reveal-heart:nth-child(2) { animation-delay: 0.3s; }
+.reveal-heart:nth-child(3) { animation-delay: 0.6s; }
+.reveal-heart:nth-child(4) { animation-delay: 0.9s; }
+.reveal-heart:nth-child(5) { animation-delay: 1.2s; }
+
+@keyframes heartFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-10px) scale(1.1); }
+}
+
+/* Completed state - hide questions, show full letter */
+.puzzle-complete .question-area {
+  display: none;
+}
+
+.puzzle-complete .letter-display {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .progress-segment {
+    width: 40px;
+    height: 40px;
+    font-size: var(--font-size-base);
+  }
+
+  .letter-block {
+    font-size: var(--font-size-base);
+  }
+
+  .question-card__text {
+    font-size: var(--font-size-lg);
+  }
+
+  .question-input-group {
+    flex-direction: column;
+  }
+
+  .question-submit {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .progress-segment {
+    width: 36px;
+    height: 36px;
+    font-size: var(--font-size-sm);
+  }
+
+  .letter-display {
+    padding: var(--space-lg);
+  }
+
+  .reveal-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .reveal-message {
+    font-size: var(--font-size-lg);
+  }
+}

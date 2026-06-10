@@ -1,0 +1,175 @@
+/* runaway.css — Runaway Button Styles */
+
+.runaway-section {
+  background: var(--color-bg-secondary);
+}
+
+.runaway-container {
+  position: relative;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--space-xl);
+}
+
+.runaway-btn {
+  position: fixed;
+  padding: var(--space-md) var(--space-xl);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  font-family: var(--font-heading);
+  font-style: italic;
+  color: var(--color-white);
+  background: var(--gradient-primary);
+  border: none;
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  cursor: pointer;
+  transition: left 0.1s ease, top 0.1s ease, transform var(--transition-fast), box-shadow var(--transition-fast);
+  z-index: var(--z-dropdown);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.runaway-btn:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-lg), 0 0 40px rgba(184, 92, 122, 0.5);
+}
+
+.runaway-btn:active {
+  transform: scale(0.98);
+}
+
+.runaway-btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.runaway-btn.caught {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  animation: pulse 0.8s ease, heartBurst 1s ease;
+  pointer-events: none;
+}
+
+.runaway-btn.caught::after {
+  content: '💕';
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  font-size: 1.5rem;
+  animation: float 1s ease-out forwards;
+}
+
+/* Floating escape messages */
+.runaway-message {
+  position: absolute;
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: var(--color-primary);
+  pointer-events: none;
+  animation: floatUp 1.5s ease-out forwards;
+  z-index: var(--z-toast);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.runaway-message.hidden {
+  display: none;
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -80px) scale(0.9);
+  }
+}
+
+@keyframes heartBurst {
+  0% {
+    box-shadow: var(--shadow-lg), 0 0 0 rgba(184, 92, 122, 0);
+  }
+  50% {
+    box-shadow: var(--shadow-lg), 0 0 60px rgba(184, 92, 122, 0.8);
+  }
+  100% {
+    box-shadow: var(--shadow-lg), 0 0 0 rgba(184, 92, 122, 0);
+  }
+}
+
+/* HeDid you know? */
+.runaway-section .section-subtitle {
+  color: var(--color-primary);
+}
+
+/* Touch device adjustments */
+@media (hover: none) and (pointer: coarse) {
+  .runaway-btn {
+    /* On touch, the button only runs on tap, not hover */
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .runaway-container {
+    min-height: 250px;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .runaway-btn {
+    transition: none;
+  }
+
+  .runaway-message {
+    animation: none;
+    opacity: 0;
+  }
+
+  .runaway-message:not(.hidden) {
+    opacity: 1;
+    animation: fadeIn var(--transition-base) forwards;
+  }
+}
+
+/* Celebration hearts */
+.celebration-heart {
+  position: fixed;
+  font-size: 1.5rem;
+  pointer-events: none;
+  z-index: var(--z-toast);
+  animation: heartFloat 2s ease-out forwards;
+}
+
+@keyframes heartFloat {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0) rotate(0deg);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, -100px) scale(1.2) rotate(10deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -250px) scale(0.8) rotate(-20deg);
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .runaway-btn {
+    padding: var(--space-sm) var(--space-lg);
+    font-size: var(--font-size-base);
+  }
+
+  .runaway-container {
+    min-height: 200px;
+  }
+}
