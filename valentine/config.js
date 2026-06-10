@@ -13,8 +13,10 @@ const CONFIG = {
   // ── Login / Password Protection ────────────────────────────────
   login: {
     enabled: true,
-    passwordHash: "5a84329267beb37c68149f71ca36d9fb4f01415d49eca583e13abdcf90a6a155",
-    hint: "Receberás a senha que abre meu coração no email, dia 12 às 16h. 💌",
+    // Simple hash (FNV-1a)
+    // Generate new hash in browser console: LOGIN.hash('sua-senha')
+    passwordHash: "96a8d93496a8d93496a8d93496a8d93496a8d93496a8d93496a8d93496a8d934",
+    hint: "Tu receberás a senha por email, meu amor, no dia 12 às 16h. 💌",
     maxAttemptsBeforeHint: 3,
     unlockQueryParam: "unlock"
   },

@@ -4,22 +4,26 @@ const LOGIN = {
   attempts: 0,
   hintShown: false,
 
-  async hash(input) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(input.toLowerCase().trim());
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    return Array.from(new Uint8Array(hashBuffer))
-      .map(b => b.toString(16).padStart(2, '0'))
-      .join('');
+  // Simple hash function (works everywhere, not cryptographically secure)
+  // FNV-1a 32-bit converted to 64-char hex string
+  hash(input) {
+    const str = input.toLowerCase().trim();
+    let hash = 0x811c9dc5; // FNV offset basis
+    for (let i = 0; i < str.length; i++) {
+      hash ^= str.charCodeAt(i);
+      hash = Math.imul(hash, 0x01000193); // FNV prime
+    }
+    // Convert to 64-char hex (padded) to match SHA-256 length format
+    return (hash >>> 0).toString(16).padStart(8, '0').repeat(8).slice(0, 64);
   },
 
   checkBypass() {
     return new URLSearchParams(window.location.search).has(CONFIG.login.unlockQueryParam);
   },
 
-  async verify(password) {
+  verify(password) {
     if (!password) return false;
-    const hash = await this.hash(password);
+    const hash = this.hash(password);
     const storedHash = CONFIG.login.passwordHash.replace('sha256:', '');
     return hash === storedHash;
   },
