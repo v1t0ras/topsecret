@@ -14,7 +14,7 @@ const CONFIG = {
     // Simple hash (FNV-1a)
     // Generate new hash in browser console: LOGIN.hash('sua-senha')
     passwordHash: "96a8d93496a8d93496a8d93496a8d93496a8d93496a8d93496a8d93496a8d934",
-    hint: "Meu amor, tu receberás a senha por email no dia 12 às 16h. 💌",
+    hint: "Meu amor, tu receberás a senha por email no dia 12 às 17:30h. 💌",
     maxAttemptsBeforeHint: 3,
     unlockQueryParam: "unlock"
   },
