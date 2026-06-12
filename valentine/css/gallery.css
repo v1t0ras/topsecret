@@ -72,9 +72,10 @@
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 3;
   padding: var(--space-lg) var(--space-md) var(--space-md);
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
-  color: var(--color-white);
+  color: #ffffff !important;
   font-size: var(--font-size-sm);
   font-style: italic;
   opacity: 0;

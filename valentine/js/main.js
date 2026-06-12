@@ -67,7 +67,7 @@ function initHeroCanvas() {
   }
 
   function createHeart() {
-    const size = 10 + Math.random() * 20;
+    const size = 40 + Math.random() * 60;
     return {
       x: Math.random() * canvas.width,
       y: canvas.height + size,
